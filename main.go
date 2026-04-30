@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"sync"
 
 	"github.com/L1mus/trial-go/internal"
@@ -60,14 +59,9 @@ func main()  {
 		internal.EvenNumber(number)
 	})
 
-	for i :=range number {
-		fmt.Println(i)
-	}
-
-
-	// wg.Go(func() {
-	// 	internal.SquareOfNumber(number)
-	// })
+	wg.Go(func() {
+		internal.SquareOfNumber(number)
+	})
 
 	close(number)
 
