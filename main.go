@@ -37,6 +37,7 @@ import (
 func main()  {
 	number := make(chan int)
 	evenNumber := make(chan int)
+	squareNumber := make(chan int)
 	var wg sync.WaitGroup
 
 	// wg.Add(4)
@@ -63,14 +64,14 @@ func main()  {
 	// close(number)
 
 	wg.Go(func() {
-		internal.SquareOfNumber(evenNumber)
+		internal.SquareOfNumber(evenNumber,squareNumber)
 	})
+
+	for data:= range squareNumber{
+		println(data)
+	}
 
 	// close(evenNumber)
 	
-	wg.Wait()
-
-
-
 
 }

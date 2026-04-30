@@ -1,18 +1,13 @@
 package internal
 
-import (
-	"fmt"
-	"math"
-)
-
-func GenerateNumber (n int ,number chan int){
+func GenerateNumber (n int ,number chan<- int){
 	for i:= range n {
 		number <- i+1
 	}
 	close(number)
 }
 
-func EvenNumber(number chan int,evenNumber chan int) {
+func EvenNumber(number <-chan int,evenNumber chan<- int) {
 	for data := range number{
 		if data % 2 == 0 {
 			evenNumber <- data
@@ -23,8 +18,15 @@ func EvenNumber(number chan int,evenNumber chan int) {
 	close(evenNumber)
 }
 
-func SquareOfNumber(evenNumber chan int)  {
+// func SquareOfNumber(evenNumber chan int)  {
+// 	for data := range evenNumber{
+// 		fmt.Println(data * data)
+// 	}
+// }
+
+func SquareOfNumber(evenNumber <-chan int, next chan<- int)  {
+	defer close(next)
 	for data := range evenNumber{
-		fmt.Println(math.Pow(float64(data),2))
+		next <- data * data
 	}
 }

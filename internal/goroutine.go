@@ -37,13 +37,9 @@ func Goroutine()  {
 		whiteBoard(messageChan)
 	})
 
-	count := 5
-	for i := 0; i < count; i++ {
-		wg.Go(func ()  {
+	wg.Go(func ()  {
 		sendMessage(messageChan)
-		
 	})
-	wg.Wait()
-	}
 	close(messageChan)
+	wg.Wait()
 }
