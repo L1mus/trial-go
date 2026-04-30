@@ -36,6 +36,7 @@ import (
 
 func main()  {
 	number := make(chan int)
+	evenNumber := make(chan int)
 	var wg sync.WaitGroup
 
 	// wg.Add(4)
@@ -46,26 +47,29 @@ func main()  {
 	// go mandi(&wg)
 
 	// go merapikanKamarTidur(&wg)
-	n := 3
+	n := 10
 	
 	// wg.Wait()
 	// println("Berangkat Kerja")
 	// internal.Goroutine()
+	
 	wg.Go(func() {
 			internal.GenerateNumber(n,number)
 	})
 
 	wg.Go(func() {
-		internal.EvenNumber(number)
+		internal.EvenNumber(number, evenNumber)
 	})
+	// close(number)
 
 	wg.Go(func() {
-		internal.SquareOfNumber(number)
+		internal.SquareOfNumber(evenNumber)
 	})
 
-	close(number)
-
+	// close(evenNumber)
+	
 	wg.Wait()
+
 
 
 
